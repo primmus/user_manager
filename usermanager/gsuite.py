@@ -12,7 +12,6 @@ def searchUser(username):
     try:
         results = service.users().get(userKey=email, projection='basic').execute()
     except:
-        print('Google API error: {} not found'.format(username))
-        return None
+        return 1
 
     return results 

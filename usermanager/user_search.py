@@ -7,6 +7,6 @@ bp = Blueprint('search', __name__, url_prefix='/search')
 def searchIndex():
     g.google = None
     if request.method == 'POST':
-        g.google = gsuite.searchUser(request.form['username'])        
+        g.google = gsuite.searchUser(request.form['username'])       
 
     return render_template('search.html')
