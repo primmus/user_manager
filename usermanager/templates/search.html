@@ -11,4 +11,24 @@
     </form>
     <hr>
     <h3>Results</h3>
+    {% if g.google is not none %}
+        <h4>G Suite data:</h4>
+        {% if g.google == 1 %}
+            User not found on G Suite
+        {% else %}
+            Name: {{ g.google['name']['fullName'] }}<br>
+            Admin: {{ g.google['isAdmin'] }}<br>
+            ID: {{ g.google['customerId'] }}<br>
+            OU: {{ g.google['orgUnitPath'] }}<br>
+            Aliases: 
+            <ul>
+                {% for item in g.google['aliases'] %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                    {% for item in g.google['nonEditableAliases'] %}
+                        <li>{{ item }}</li>
+                    {% endfor %}            
+            </ul>
+        {% endif %}
+    {% endif %}
 {% endblock %}
