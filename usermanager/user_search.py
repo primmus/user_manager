@@ -14,7 +14,7 @@ def searchIndex():
         email = username + '@distilled.ie'      
         
         g.google = gsuite.searchUser(email)
-        g.ad = activedirectory.getUserDN(username)
+        g.ad = activedirectory.getUser(username)
         
 
     return render_template('search.html')

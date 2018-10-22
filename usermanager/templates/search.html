@@ -32,7 +32,15 @@
         {% endif %}
     {% endif %}
     {% if g.ad is not none %}
+        <br>
         <h4>Active Directory data:</h4>
-        DN: {{ g.ad['dn'] }}
+        DN: {{ g.ad['dn'] }}<br>
+        Status: {{g.ad['status']}}<br>
+        Groups:
+        <ul>
+            {% for item in g.ad['groups'] %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
     {% endif %}
 {% endblock %}

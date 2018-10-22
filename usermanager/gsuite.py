@@ -9,8 +9,7 @@ def searchUser(email):
     delegated_credentials = credentials.with_subject('sergio.bestetti@distilled.ie')
     service = googleapiclient.discovery.build('admin', 'directory_v1', credentials=delegated_credentials)    
     try:        
-        results = service.users().get(userKey=email, projection='basic').execute()
-        print(type(results))        
+        results = service.users().get(userKey=email, projection='basic').execute()                
     except:
         return 1
 
