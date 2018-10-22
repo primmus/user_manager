@@ -7,6 +7,11 @@ bp = Blueprint('search', __name__, url_prefix='/search')
 def searchIndex():
     g.google = None
     if request.method == 'POST':
-        g.google = gsuite.searchUser(request.form['username'])       
+        username = request.form['username']
+        if '@' in username:
+            username = username.split('@')[0]
+        email = username + '@distilled.ie'      
+        
+        g.google = gsuite.searchUser(email)       
 
     return render_template('search.html')
