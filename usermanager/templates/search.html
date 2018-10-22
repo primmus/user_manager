@@ -31,4 +31,8 @@
             </ul>
         {% endif %}
     {% endif %}
+    {% if g.ad is not none %}
+        <h4>Active Directory data:</h4>
+        DN: {{ g.ad['dn'] }}
+    {% endif %}
 {% endblock %}
