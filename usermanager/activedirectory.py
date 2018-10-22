@@ -13,6 +13,8 @@ class AdUser():
         self.dn = ''
         self.groups = list()
         self.status = ''
+        self.wrongPasswordAttempts = 0
+
     
 
 def convertGuid(rdGuid):
@@ -41,8 +43,10 @@ def getUser(username):
                     conn.search(
                             search_base=ad_config['users_ou'],
                             search_filter=adFilter,
-                            attributes = ["distinguishedName", "memberOf", "userAccountControl"]
+                            attributes = ["distinguishedName", "memberOf", "userAccountControl", "badPwdCount"]
                     )
+                    if len(conn.entries) < 1:
+                        return 1
                     user = AdUser()
                     user.dn = str(conn.entries[0].distinguishedName)
                     groups = conn.entries[0].memberOf                        
@@ -58,4 +62,5 @@ def getUser(username):
                         user.status = 'Account locked out'
                     elif status_code == 8389120:
                         user.status = 'Password expired'
+                    user.wrongPasswordAttempts = conn.entries[0].badPwdCount
                     return user

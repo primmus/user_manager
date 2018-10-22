@@ -34,13 +34,18 @@
     {% if g.ad is not none %}
         <br>
         <h4>Active Directory data:</h4>
-        DN: {{ g.ad['dn'] }}<br>
-        Status: {{g.ad['status']}}<br>
-        Groups:
-        <ul>
-            {% for item in g.ad['groups'] %}
-                <li>{{ item }}</li>
-            {% endfor %}
-        </ul>
+        {% if g.ad == 1 %}
+            User not found on Active Directory
+        {% else %}
+            DN: {{ g.ad['dn'] }}<br>
+            Status: {{g.ad['status']}}<br>
+            Wrong password attempts: {{ g.ad['wrongPasswordAttempts'] }}<br>
+            Groups:
+            <ul>
+                {% for item in g.ad['groups'] %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% endif %}
 {% endblock %}
