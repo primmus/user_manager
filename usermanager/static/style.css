@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;    
+}
+
+h1 {
+    color: white;
+    margin: 2px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link {
+    color: black;    
+}
+
+a:visited {
+    color: black;    
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    margin: 0px;
+}
+
+.header {
+    background-color: cadetblue;
+    padding: 10px;
+    box-shadow: 5px 5px 15px -2px #000000;
+}
+
+.google_result {
+    background-color: rgb(161, 190, 190);
+    padding: 4px;   
+}
+
+.google_result h4 {
+    border: 0px;
+    margin: 3px;
+    color: white;
+}
+
+.ad_result {
+    background-color: rgb(149, 192, 221);
+    padding: 4px;  
+}
+
+.ad_result h4 {
+    border: 0px;
+    margin: 3px;
+    color: white;
+}

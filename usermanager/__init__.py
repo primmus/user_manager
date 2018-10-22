@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, url_for
 
 def create_app():
 
@@ -6,7 +6,7 @@ def create_app():
 
     @app.route('/')
     def index():
-        return '<h1>Index page</h1>'
+        return render_template('index.html')
 
     from . import user_search
     app.register_blueprint(user_search.bp)  

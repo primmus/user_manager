@@ -7,6 +7,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='style.css') }}" />    
 </head>
 <body>
+    <div class="header">
+        <h1>BizOps User manager</h1>
+        <a href="{{ url_for('search.searchIndex') }}">Search users</a> |
+        <a href="{{ url_for('search.searchIndex') }}">Create new user</a> |
+        <a href="{{ url_for('search.searchIndex') }}">Disable user</a>
+    </div>
     {% block content %}
     {% endblock %}    
 </body>
