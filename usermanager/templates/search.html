@@ -7,28 +7,78 @@
     <form method="POST">
         <label for="username">Username (first.last)</label>
         <input name="username" id="username" required>
-        <input type="submit" value="Search">
+        <input type="submit" value="Search" class="button">
     </form>
-    <hr>
-    <h3>Results</h3>
     {% if g.google is not none %}
-        <h4>G Suite data:</h4>
-        {% if g.google == 1 %}
-            User not found on G Suite
-        {% else %}
-            Name: {{ g.google['name']['fullName'] }}<br>
-            Admin: {{ g.google['isAdmin'] }}<br>
-            ID: {{ g.google['customerId'] }}<br>
-            OU: {{ g.google['orgUnitPath'] }}<br>
-            Aliases: 
-            <ul>
-                {% for item in g.google['aliases'] %}
-                        <li>{{ item }}</li>
+        <div class="result">
+            <h4>G Suite data:</h4>
+            {% if g.google == 1 %}
+                User not found on G Suite
+            {% else %}
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{ g.google['name']['fullName'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Admin</td>
+                        <td>{{ g.google['isAdmin'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td>{{ g.google['customerId'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>OU</td>
+                        <td>{{ g.google['orgUnitPath'] }}</td>
+                    </tr>                    
+                </table>
+                <br>Email aliases
+                <table>
+                    {% for item in g.google['aliases'] %}
+                        <tr>
+                            <td>{{ item }}</td>
+                        </tr>
                     {% endfor %}
                     {% for item in g.google['nonEditableAliases'] %}
-                        <li>{{ item }}</li>
-                    {% endfor %}            
-            </ul>
+                        <tr>
+                            <td>{{ item }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if g.ad is not none %}
+    <div class="result">
+        <h4>Active Directory data:</h4>
+        {% if g.ad == 1 %}
+            User not found on Active Directory
+        {% else %}
+            <table>
+                <tr>
+                    <td>DN</td>
+                    <td>{{ g.ad['dn'] }}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>{{g.ad['status']}}</td>
+                </tr>
+                <tr>
+                    <td>Wrong password attempts</td>
+                    <td>{{ g.ad['wrongPasswordAttempts'] }}</td>
+                </tr>
+            </table>
+            <br>Groups:
+            <table>
+                {% for item in g.ad['groups'] %}
+                <tr>
+                    <td>{{ item }}</td>
+                </tr>
+                {% endfor %}
+            </table>
         {% endif %}
     {% endif %}
+    </div>
 {% endblock %}
