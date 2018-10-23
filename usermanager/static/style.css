@@ -42,7 +42,7 @@ table thead th {
     color: #FFFFFF;
     border-left: 2px solid #D0E4F5;
 }
-
+    
 table thead th:first-child {
     border-left: none;
 }
