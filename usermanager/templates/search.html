@@ -15,7 +15,7 @@
             {% if g.google == 1 %}
                 User not found on G Suite
             {% else %}
-                <table>
+                <table class="resultsTable">
                     <tr>
                         <td>Name</td>
                         <td>{{ g.google['name']['fullName'] }}</td>
@@ -34,7 +34,7 @@
                     </tr>                    
                 </table>
                 <br>Email aliases
-                <table>
+                <table class="resultsTable">
                     {% for item in g.google['aliases'] %}
                         <tr>
                             <td>{{ item }}</td>
@@ -56,7 +56,7 @@
         {% if g.ad == 1 %}
             User not found on Active Directory
         {% else %}
-            <table>
+            <table class="resultsTable">
                 <tr>
                     <td>DN</td>
                     <td>{{ g.ad['dn'] }}</td>
@@ -71,7 +71,7 @@
                 </tr>
             </table>
             <br>Groups:
-            <table>
+            <table class="resultsTable">
                 {% for item in g.ad['groups'] %}
                 <tr>
                     <td>{{ item }}</td>
