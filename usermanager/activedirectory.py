@@ -1,21 +1,12 @@
 from ldap3 import Server, Connection, NTLM, ALL, MODIFY_ADD, MODIFY_REPLACE
 import json
 import uuid
+from . import user
 
 # Load settings from the json file and generate
 # the server object to be used on all connections
 ad_config = json.loads(open('settings.json').read())
 server = Server(ad_config['server'], use_ssl=True, get_info=ALL)
-
-class AdUser():    
-
-    def __init__(self):
-        self.dn = ''
-        self.groups = list()
-        self.status = ''
-        self.wrongPasswordAttempts = 0
-
-    
 
 def convertGuid(rdGuid):
 # Function for Formating AD ObjectGuid in Little Endian Format for Searches
@@ -32,8 +23,8 @@ def convertGuid(rdGuid):
 
 	return fltrGuid
 
-def getUser(username):   
-    adFilter = "(&(objectclass=user)(!(objectclass=computer))(sAMAccountName=" + username  + "))"
+def getUser(userToSearch):   
+    adFilter = "(&(objectclass=user)(!(objectclass=computer))(sAMAccountName=" + userToSearch.login  + "))"
     with Connection(server,
                     user=ad_config['user'],
                     password=ad_config['password'],
@@ -46,21 +37,17 @@ def getUser(username):
                             attributes = ["distinguishedName", "memberOf", "userAccountControl", "badPwdCount"]
                     )
                     if len(conn.entries) < 1:
-                        return 1
-                    user = AdUser()
-                    user.dn = str(conn.entries[0].distinguishedName)
+                        return userToSearch
+                    
+                    userToSearch.adDn = str(conn.entries[0].distinguishedName)
                     groups = conn.entries[0].memberOf                        
+                    userToSearch.setAdAccountStatus(conn.entries[0].userAccountControl)                    
+                    userToSearch.adWrongPasswordAttempts = conn.entries[0].badPwdCount
+                    
                     for group in groups:
                             name = group.split(',')[0]
-                            user.groups.append(name[3:])
-                    status_code = conn.entries[0].userAccountControl
-                    if status_code == 512:
-                        user.status = 'Active'
-                    elif status_code == 514:
-                        user.status = 'Account disabled'
-                    elif status_code == 528:
-                        user.status = 'Account locked out'
-                    elif status_code == 8389120:
-                        user.status = 'Password expired'
-                    user.wrongPasswordAttempts = conn.entries[0].badPwdCount
-                    return user
+                            userToSearch.adGroups.append(name[3:])
+                    
+                    userToSearch.adExists = True
+                    
+                    return userToSearch
