@@ -9,6 +9,9 @@ def create_app():
         return render_template('index.html')
 
     from . import user_search
-    app.register_blueprint(user_search.bp)  
+    app.register_blueprint(user_search.bp)
+
+    from . import user_add
+    app.register_blueprint(user_add.bp)  
 
     return app

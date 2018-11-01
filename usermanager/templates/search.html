@@ -9,76 +9,61 @@
         <input name="username" id="username" required>
         <input type="submit" value="Search" class="button">
     </form>
-    {% if g.google is not none %}
+
+    {% if g.user.gExists %}
         <div class="result">
             <h4>G Suite data:</h4>
-            {% if g.google == 1 %}
-                User not found on G Suite
-            {% else %}
-                <table>
+            <table class="resultsTable">
+                <tr>
+                    <td>Name</td>
+                    <td>{{ g.user.getFullName() }}</td>
+                </tr>
+                <tr>
+                    <td>Admin</td>
+                    <td>{{ g.user.gAdmin }}</td>
+                </tr>
+                <tr>
+                    <td>OU</td>
+                    <td>{{ g.user.gOu }}</td>
+                </tr>                    
+            </table>
+            <br>Email aliases
+            <table class="resultsTable">
+                {% for item in g.user.gEmailAliases %}
                     <tr>
-                        <td>Name</td>
-                        <td>{{ g.google['name']['fullName'] }}</td>
+                        <td>{{ item }}</td>
                     </tr>
-                    <tr>
-                        <td>Admin</td>
-                        <td>{{ g.google['isAdmin'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>ID</td>
-                        <td>{{ g.google['customerId'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>OU</td>
-                        <td>{{ g.google['orgUnitPath'] }}</td>
-                    </tr>                    
-                </table>
-                <br>Email aliases
-                <table>
-                    {% for item in g.google['aliases'] %}
-                        <tr>
-                            <td>{{ item }}</td>
-                        </tr>
-                    {% endfor %}
-                    {% for item in g.google['nonEditableAliases'] %}
-                        <tr>
-                            <td>{{ item }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
+                {% endfor %}                    
+            </table>
         </div>
     {% endif %}
 
-    {% if g.ad is not none %}
-    <div class="result">
-        <h4>Active Directory data:</h4>
-        {% if g.ad == 1 %}
-            User not found on Active Directory
-        {% else %}
-            <table>
+    {% if g.user.adExists %}
+        <div class="result">
+            <h4>Active Directory data:</h4>
+            <table class="resultsTable">
                 <tr>
                     <td>DN</td>
-                    <td>{{ g.ad['dn'] }}</td>
+                    <td>{{ g.user.adDn }}</td>
                 </tr>
                 <tr>
                     <td>Status</td>
-                    <td>{{g.ad['status']}}</td>
+                    <td>{{ g.user.adAccountStatus }}</td>
                 </tr>
                 <tr>
                     <td>Wrong password attempts</td>
-                    <td>{{ g.ad['wrongPasswordAttempts'] }}</td>
+                    <td>{{ g.user.adWrongPasswordAttempts }}</td>
                 </tr>
             </table>
             <br>Groups:
-            <table>
-                {% for item in g.ad['groups'] %}
+            <table class="resultsTable">
+                {% for item in g.user.adGroups %}
                 <tr>
                     <td>{{ item }}</td>
                 </tr>
                 {% endfor %}
-            </table>
-        {% endif %}
+            </table>           
+        </div>
     {% endif %}
-    </div>
+    
 {% endblock %}

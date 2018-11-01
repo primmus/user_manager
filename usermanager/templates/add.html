@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Add user{% endblock %}
+
+{% block content %}
+    <h3>User creation</h3>
+    <div class="newUserForm">
+        <form method="POST">
+            <table>
+                <tr class="headLine">
+                    <td>
+                        First name
+                    </td>
+                    <td>
+                        Last name
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="firstName" name="firstName" placeholder="First" required>
+                    </td>
+                    <td>
+                        <input type="text" id="lastName" name="lastName" placeholder="Last" required>
+                    </td>
+                </tr>
+                <tr class="headLine">
+                    <td>
+                        Login
+                    </td>
+                    <td>
+                        Location
+                    </td>                
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="login" name="userName" placeholder="firstName.lastName" required>
+                    </td>
+                    <td>
+                        <select name="location">
+                            <option value="dublin">Dublin</option>
+                            <option value="wexford">Wexford</option>
+                            <option value="remote">Remote/Other</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="headLine">
+                    <td>
+                        Email aliases
+                    </td>
+                    <td>
+                        Schibsted's services
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="gEmailAliases" value="adverts">adverts.ie<br>
+                        <input type="checkbox" name="gEmailAliases" value="daft">daft.ie<br>
+                        <input type="checkbox" name="gEmailAliases" value="donedeal">donedeal.ie
+                    </td>
+                    <td>
+                        <input type="checkbox" name="adServices" value="slack">Slack<br>
+                        <input type="checkbox" name="adServices" value="jira">Jira<br>
+                        <input type="checkbox" name="adServices" value="confluence">Confluence
+                    </td>
+                </tr>
+                <tr class="headLine">
+                    <td>
+                        Other services
+                    </td>                    
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="adServices" value="tableau">Tableau<br>
+                        <input type="checkbox" name="services" value="zoom">Zoom<br>
+                        <input type="checkbox" name="services" value="tp">Target Process
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="vpn" value="daft">VPN - Daft<br>
+                        <input type="checkbox" name="vpn" value="distilled">VPN - Distilled<br>
+                        <input type="checkbox" name="vpn" value="donedeal">VPN - DoneDeal
+                    </td>
+                </tr>
+                <tr class="headLine">
+                    <td>
+                        <input type="submit" value="Create user" class="button">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}
