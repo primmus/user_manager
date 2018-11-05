@@ -1,7 +1,7 @@
 from ldap3 import Server, Connection, NTLM, ALL, MODIFY_ADD, MODIFY_REPLACE
 import json
 import uuid
-from . import user
+import user
 
 # Load settings from the json file and generate
 # the server object to be used on all connections

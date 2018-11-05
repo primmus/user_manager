@@ -1,6 +1,6 @@
 from google.oauth2 import service_account
 import googleapiclient.discovery
-from . import user
+import user
 
 SCOPES = ['https://www.googleapis.com/auth/admin.directory.user']
 SERVICE_ACCOUNT_FILE = 'service.json'
