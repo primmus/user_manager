@@ -23,7 +23,7 @@ def convertGuid(rdGuid):
 
 	return fltrGuid
 
-def getUser(userToSearch):   
+def searchUser(userToSearch):   
     adFilter = "(&(objectclass=user)(!(objectclass=computer))(sAMAccountName=" + userToSearch.login  + "))"
     with Connection(server,
                     user=ad_config['user'],
@@ -51,3 +51,6 @@ def getUser(userToSearch):
                     userToSearch.adExists = True
                     
                     return userToSearch
+
+def getGroups():
+        return ad_config['groups']

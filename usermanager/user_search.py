@@ -14,10 +14,10 @@ def searchIndex():
             username = username.split('@')[0]
         email = username + '@distilled.ie'
         userToSearch.login = username
-        userToSearch.email = email
+        userToSearch.gMainEmail = email
 
         userToSearch = gsuite.searchUser(userToSearch)
-        userToSearch = activedirectory.getUser(userToSearch)
+        userToSearch = activedirectory.searchUser(userToSearch)
         
         g.user = userToSearch        
 

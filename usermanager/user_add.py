@@ -12,8 +12,11 @@ def addIndex():
         newUser.login = request.form['userName']
         newUser.location = request.form['location']
         newUser.gEmailAliases = request.form.getlist('gEmailAliases')
-        newUser.adServices = request.form.getlist('adServices')
+        newUser.adGroups = request.form.getlist('adGroups')
         newUser.services = request.form.getlist('services')
-        newUser.vpn = request.form.getlist('vpn')         
+        newUser.vpn = request.form.getlist('vpn')        
+
+    adGroups = activedirectory.getGroups()
+    g.adGroups = adGroups         
 
     return render_template('add.html')

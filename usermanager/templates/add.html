@@ -45,22 +45,22 @@
                 </tr>
                 <tr class="headLine">
                     <td>
-                        Email aliases
+                            Active Directory groups
                     </td>
                     <td>
-                        Schibsted's services
+                        Email aliases
                     </td>
                 </tr>
                 <tr>
                     <td>
+                        {% for k, v in g.adGroups.items() %}
+                            <input type="checkbox" name="adGroups" value="{{v}}">{{k}}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
                         <input type="checkbox" name="gEmailAliases" value="adverts">adverts.ie<br>
                         <input type="checkbox" name="gEmailAliases" value="daft">daft.ie<br>
                         <input type="checkbox" name="gEmailAliases" value="donedeal">donedeal.ie
-                    </td>
-                    <td>
-                        <input type="checkbox" name="adServices" value="slack">Slack<br>
-                        <input type="checkbox" name="adServices" value="jira">Jira<br>
-                        <input type="checkbox" name="adServices" value="confluence">Confluence
                     </td>
                 </tr>
                 <tr class="headLine">
@@ -70,11 +70,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" name="adServices" value="tableau">Tableau<br>
                         <input type="checkbox" name="services" value="zoom">Zoom<br>
                         <input type="checkbox" name="services" value="tp">Target Process<br>
-                        <input type="checkbox" name="vpn" value="daft">VPN - Daft<br>
-                        <input type="checkbox" name="vpn" value="distilled">VPN - Distilled<br>
+                        <input type="checkbox" name="vpn" value="daft">VPN - Daft<br>                        
                         <input type="checkbox" name="vpn" value="donedeal">VPN - DoneDeal
                     </td>
                 </tr>                

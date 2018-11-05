@@ -12,7 +12,7 @@ class User():
         #  Active Directory properties
         self.adExists = False
         self.adGroups = list()
-        self.adServices = list()
+        self.adGroups = list()
         self.adDn = ''        
         self.adAccountStatus = ''
         self.adWrongPasswordAttempts = 0
