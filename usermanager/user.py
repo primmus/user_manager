@@ -12,7 +12,7 @@ class User():
         #  Active Directory properties
         self.adExists = False
         self.adGroups = list()
-        self.adServices = list()
+        self.adGroups = list()
         self.adDn = ''        
         self.adAccountStatus = ''
         self.adWrongPasswordAttempts = 0
@@ -34,8 +34,10 @@ class User():
             self.adAccountStatus = 'Password expired'
         elif statusCode == 0:
             self.adAccountStatus = 'Not set'
+        elif statusCode == 66048:
+            self.adAccountStatus = 'Password never expires'
         else:
-            self.adAccountStatus = 'Unhandled status'    
+            self.adAccountStatus = 'Unhandled status - ' + str(statusCode)
    
     def getFullName(self):
         fullName = self.firstName + ' ' + self.lastName
