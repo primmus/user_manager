@@ -6,10 +6,10 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-import user_search
+import blueprints.user_search as user_search
 app.register_blueprint(user_search.bp)
 
-import user_add
+import blueprints.user_add as user_add
 app.register_blueprint(user_add.bp)  
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, g
-import gsuite, activedirectory, user
+import apis.gsuite as gsuite
+import apis.activedirectory as activedirectory
+import user
 
 bp = Blueprint('search', __name__, url_prefix='/search')
 

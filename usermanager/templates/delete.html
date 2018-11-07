@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Search user{% endblock %}
+
+{% block content %}
+    <h3>Disable user</h3>
+    <form method="POST">
+        <label for="username">Username (first.last)</label>
+        <input name="username" id="username" required>
+        <input type="submit" value="Search" class="button">
+    </form>
+
+    
+    
+{% endblock %}

@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, g
-import gsuite, activedirectory, user
+from apis import gsuite, activedirectory
+import apis.activedirectory
 
 bp = Blueprint('add', __name__, url_prefix='/add')
 
