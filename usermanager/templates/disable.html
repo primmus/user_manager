@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Disable user{% endblock %}
+
+{% block content %}
+    <h3>Disable user</h3>
+    <form method="POST">
+        <label for="username">Username (first.last)</label>
+        <input name="username" id="username" required>
+        <input type="submit" value="Check" class="button">
+    </form>
+
+    {% if g.user %}
+        <div class="result">
+            <h4>User to disable: {{ g.user.getFullName() }}</h4>
+            <table class="resultsTable">
+                <tr>
+                    <td>G Suite</td>
+                    <td>{{ g.user.gMainEmail }}</td>
+                </tr>
+                <tr>
+                    <td>Active Directory</td>
+                    <td>{{ g.user.adDn }}</td>
+                </tr>
+            </table>
+        </div>        
+    {% endif %}
+
+    
+    
+{% endblock %}
