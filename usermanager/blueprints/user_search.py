@@ -9,7 +9,7 @@ def searchIndex():
     g.user = user.User()
     
     if request.method == 'POST':        
-        username = request.form['username']
+        username = request.form['username']        
         userToSearch = tools.getUser(username)        
         
         g.user = userToSearch        
