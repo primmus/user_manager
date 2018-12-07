@@ -52,6 +52,14 @@ def searchUser(userToSearch):
     return userToSearch
 
 def dataTransfer(originUser, destinationUser):
-    service = getDatatransferService()
-    tmp = service.transfers().list().execute()
-    print(tmp)
+    service = getDatatransferService()    
+    #response = service.transfers().list().execute()
+    dataTransferRequestBody = {
+        "oldOwnerUserId": originUser.gId,
+        "newOwnerUserId": destinationUser.gId,
+        "applicationDataTransfers": [
+            {"applicationId": 55656082996}
+        ]
+    }
+    response = service.transfers().insert(body=dataTransferRequestBody).execute()
+    print(response['id'])
