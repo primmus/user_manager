@@ -3,18 +3,24 @@ import googleapiclient.discovery
 import user
 import sys
 
-SCOPES = ['https://www.googleapis.com/auth/admin.directory.user']
+SCOPES = ['https://www.googleapis.com/auth/admin.directory.user', 'https://www.googleapis.com/auth/admin.datatransfer']
 SERVICE_ACCOUNT_FILE = 'service.json'
 # TODO: Move the user account to the settings files
 SUBJECT = 'sergio.bestetti@distilled.ie'
 
-def getService():
+def getEmailService():
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     delegated_credentials = credentials.with_subject(SUBJECT)
     return googleapiclient.discovery.build('admin', 'directory_v1', credentials=delegated_credentials)
 
+def getDatatransferService():
+    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    delegated_credentials = credentials.with_subject(SUBJECT)
+    return googleapiclient.discovery.build('admin', 'datatransfer_v1', credentials=delegated_credentials)
+
+
 def disableUser(userToDisable):
-    service = getService()
+    service = getEmailService()
     myBody = {
         "suspended": True
     }
@@ -22,13 +28,14 @@ def disableUser(userToDisable):
 
 def searchUser(userToSearch):        
     try:        
-        service = getService()
-        results = service.users().get(userKey=userToSearch.gMainEmail, projection='basic').execute()        
+        service = getEmailService()
+        results = service.users().get(userKey=userToSearch.gMainEmail, projection='basic').execute()
         userToSearch.firstName = results['name']['givenName']
         userToSearch.lastName = results['name']['familyName']
         userToSearch.gMainEmail = results['primaryEmail']
         userToSearch.gAdmin = results['isAdmin']
         userToSearch.gOu = results['orgUnitPath']
+        userToSearch.gId = results['id']        
         
         for item in results['emails']:
             userToSearch.gEmailAliases.append(item['address'])
@@ -43,3 +50,8 @@ def searchUser(userToSearch):
         return userToSearch
 
     return userToSearch
+
+def dataTransfer(originUser, destinationUser):
+    service = getDatatransferService()
+    tmp = service.transfers().list().execute()
+    print(tmp)

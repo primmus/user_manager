@@ -17,6 +17,7 @@ class User():
         self.adAccountStatus = ''
         self.adWrongPasswordAttempts = 0
         # Google properties
+        self.gId = ''
         self.gExists = False
         self.gMainEmail = ''
         self.gEmailAliases = list()

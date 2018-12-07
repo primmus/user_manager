@@ -1,4 +1,6 @@
 from flask import Flask, render_template, url_for
+import threading
+import apis.database
 
 app = Flask(__name__)
 
@@ -16,4 +18,6 @@ import blueprints.user_disable as user_disable
 app.register_blueprint(user_disable.bp)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    monitorThread = threading.Thread(target=apis.database.startMonitor)
+    #monitorThread.start()
+    app.run(host='0.0.0.0', port=5000, debug=True)

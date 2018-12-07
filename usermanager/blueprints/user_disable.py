@@ -15,11 +15,15 @@ def disableIndex():
         if request.form['btn'] == 'Check':
             username = request.form['username']
             global userToDisable
-            userToDisable = tools.getUser(username)        
-        
+            userToDisable = tools.getUser(username)       
             g.user = userToDisable
         elif request.form['btn'] == 'Disable':
-            apis.gsuite.disableUser(userToDisable)
+            if 'yes' in request.form.getlist('dataTransfer'):
+                destinationUsername = request.form['destinationUser']
+                destinationUser = tools.getUser(destinationUsername)
+                apis.gsuite.dataTransfer(userToDisable, destinationUser)
+            else:
+                apis.gsuite.disableUser(userToDisable)
 
 
     return render_template('disable.html')
