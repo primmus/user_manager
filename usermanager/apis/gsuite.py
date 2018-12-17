@@ -1,7 +1,8 @@
 from google.oauth2 import service_account
 import googleapiclient.discovery
-import user
 import sys
+import user
+import apis.database
 
 SCOPES = ['https://www.googleapis.com/auth/admin.directory.user', 'https://www.googleapis.com/auth/admin.datatransfer']
 SERVICE_ACCOUNT_FILE = 'service.json'
@@ -53,7 +54,6 @@ def searchUser(userToSearch):
 
 def dataTransfer(originUser, destinationUser):
     service = getDatatransferService()    
-    #response = service.transfers().list().execute()
     dataTransferRequestBody = {
         "oldOwnerUserId": originUser.gId,
         "newOwnerUserId": destinationUser.gId,
@@ -62,4 +62,9 @@ def dataTransfer(originUser, destinationUser):
         ]
     }
     response = service.transfers().insert(body=dataTransferRequestBody).execute()
-    print(response['id'])
+    apis.database.addTask(response['id'], originUser, destinationUser)
+
+def dataTransferChecker(taskId):    
+    service = getDatatransferService()    
+    response = service.transfers().get(dataTransferId=taskId).execute()
+    print("Transfer status: {}".format(response['overallTransferStatusCode']))

@@ -19,5 +19,5 @@ app.register_blueprint(user_disable.bp)
 
 if __name__ == '__main__':
     monitorThread = threading.Thread(target=apis.database.startMonitor)
-    #monitorThread.start()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    monitorThread.start()
+    app.run(host='0.0.0.0', port=5000, debug=True) 
