@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, g, session, redirect, url_for
-from apis import gsuite, activedirectory
-import apis.activedirectory
+from apis import activedirectory  # gsuite
+import user
 
 bp = Blueprint('add', __name__, url_prefix='/add')
 
@@ -20,6 +20,6 @@ def addIndex():
         newUser.vpn = request.form.getlist('vpn')        
 
     adGroups = activedirectory.getGroups()
-    g.adGroups = adGroups         
+    g.adGroups = adGroups
 
     return render_template('add.html')

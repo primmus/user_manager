@@ -8,12 +8,12 @@ class User():
         self.location = ''
         self.password = ''
         self.services = list()
-        self.vpn = list()        
+        self.vpn = list()
         #  Active Directory properties
         self.adExists = False
         self.adGroups = list()
         self.adGroups = list()
-        self.adDn = ''        
+        self.adDn = ''
         self.adAccountStatus = ''
         self.adWrongPasswordAttempts = 0
         # Google properties
@@ -23,7 +23,7 @@ class User():
         self.gEmailAliases = list()
         self.gAdmin = False
         self.gOu = ''
-     
+
     def setAdAccountStatus(self, statusCode):
         if statusCode == 512:
             self.adAccountStatus = 'Active'
@@ -39,7 +39,7 @@ class User():
             self.adAccountStatus = 'Password never expires'
         else:
             self.adAccountStatus = 'Unhandled status - ' + str(statusCode)
-   
+
     def getFullName(self):
         fullName = self.firstName + ' ' + self.lastName
         fullName = fullName.title()
@@ -60,6 +60,5 @@ class User():
             self.adAccountStatus,
             self.adDn,
             self.adGroups
-        )       
-        
+        )
         return response
