@@ -181,3 +181,10 @@ tr.headLine td {
     font-weight: bold;
     
 }
+
+.login_box {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;    
+}
