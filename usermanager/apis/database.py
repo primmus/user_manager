@@ -2,6 +2,16 @@ import sqlite3
 import schedule
 import time
 from apis import gsuite
+import user
+import tools
+
+
+def deleteTask(taskId):
+        conn = sqlite3.connect('db.sqlite3')
+        c = conn.cursor()
+        c.execute("DELETE FROM Tasks WHERE transfer_id=?", (taskId,))
+        conn.commit()
+        conn.close()
 
 
 def addTask(taskId, originUser, destinationUser):
@@ -27,4 +37,11 @@ def dataTransferMonitorJob():
         rows = c.fetchall()
         conn.close()
         for row in rows:
-                gsuite.dataTransferChecker(row[4])
+                status = gsuite.dataTransferChecker(row[4])
+                if status == 'completed':
+                        userToDelete = user.User()
+                        userToDelete = tools.getUser(row[1])
+                        gsuite.disableUser(userToDelete)
+                        deleteTask(row[4])
+
+                        

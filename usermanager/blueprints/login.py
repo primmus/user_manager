@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session  # g
+from flask import Blueprint, render_template, request, session, redirect, url_for  # g
 
 bp = Blueprint('login', __name__, url_prefix='/login')
 
@@ -13,4 +13,4 @@ def loginIndex():
             session.clear()
             session['user_id'] = 'rosca'
 
-    return render_template('login.html')
+    return redirect(url_for('index'))

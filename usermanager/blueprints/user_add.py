@@ -6,7 +6,7 @@ bp = Blueprint('add', __name__, url_prefix='/add')
 
 @bp.route('/', methods=('POST', 'GET'))
 def addIndex():
-    if not session['user_id']:
+    if 'user_id' not in session:
         return redirect(url_for('login'))
     if request.method == 'POST':
         newUser = user.User()

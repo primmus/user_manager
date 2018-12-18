@@ -25,7 +25,7 @@ def getDatatransferService():
     return googleapiclient.discovery.build('admin', 'datatransfer_v1', credentials=delegated_credentials)
 
 
-def disableUser(userToDisable):
+def disableUser(userToDisable):    
     service = getEmailService()
     myBody = {
         "suspended": True
@@ -78,4 +78,4 @@ def dataTransfer(originUser, destinationUser):
 def dataTransferChecker(taskId):
     service = getDatatransferService()
     response = service.transfers().get(dataTransferId=taskId).execute()
-    print("Transfer status: {}".format(response['overallTransferStatusCode']))
+    return response['overallTransferStatusCode']
