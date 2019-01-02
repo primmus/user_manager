@@ -6,7 +6,7 @@ from blueprints import user_search, user_add, user_disable, login, admin_user
 app = Flask(__name__)
 app.config.from_mapping(
     SECRET_KEY='dev',
-    ENABLED_USER_SETUP=False
+    ENABLED_USER_SETUP=True
 )
 
 
