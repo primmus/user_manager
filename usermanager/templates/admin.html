@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin page{% endblock %}
+
+{% block content %}
+    
+    <h3>Add new admin</h3>
+    <div class="login_box">
+        <form method="POST">
+                <table>
+                    <tr>                        
+                        <td><input name="username" id="username" required placeholder="Login"><br></td>
+                    </tr>
+                    <tr>                        
+                        <td><input type="password" name="password" id="password" required placeholder="Password"><br></td>
+                    </tr>
+                </table>
+                <input type="submit" value="Add" class="button">
+            </form>
+    </div>        
+    
+{% endblock %}

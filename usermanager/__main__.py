@@ -1,7 +1,7 @@
 import threading
 import apis.database
 from flask import Flask, render_template
-from blueprints import user_search, user_add, user_disable, login, admin_user
+from blueprints import user_search, user_add, user_disable, login
 
 app = Flask(__name__)
 app.config.from_mapping(
@@ -19,7 +19,6 @@ app.register_blueprint(user_search.bp)
 app.register_blueprint(user_add.bp)
 app.register_blueprint(user_disable.bp)
 app.register_blueprint(login.bp)
-app.register_blueprint(admin_user.bp)
 
 if __name__ == '__main__':
     monitorThread = threading.Thread(target=apis.database.startMonitor)

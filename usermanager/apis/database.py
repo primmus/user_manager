@@ -44,4 +44,22 @@ def dataTransferMonitorJob():
                         gsuite.disableUser(userToDelete)
                         deleteTask(row[4])
 
-                        
+
+def addAdmin(username, password):
+        conn = sqlite3.connect('db.sqlite3')
+        c = conn.cursor()
+        if c.execute('SELECT * FROM Users WHERE login = ?', (username,)).fetchone() is not None:
+                conn.close()
+                return 1
+        else:
+                c.execute("INSERT INTO Users (login, password) VALUES (?, ?)", (username, password))
+                conn.commit()
+
+        conn.close()
+        return 0
+
+def getAdmin(username):
+        conn = sqlite3.connect('db.sqlite3')
+        c = conn.cursor()
+        admin = c.execute('SELECT * FROM Users WHERE login = ?', (username,)).fetchone()
+        return admin
