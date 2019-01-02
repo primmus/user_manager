@@ -1,3 +1,4 @@
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, render_template, request, session, redirect, url_for  # g
 import functools
 
