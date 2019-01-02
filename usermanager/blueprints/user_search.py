@@ -7,9 +7,6 @@ bp = Blueprint('search', __name__, url_prefix='/search')
 @bp.route('/', methods=('POST', 'GET'))
 def searchIndex():
 
-    if 'user_id' not in session:
-        return redirect(url_for('login.loginIndex'))
-
     userToSearch = user.User()
     g.user = user.User()
 

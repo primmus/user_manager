@@ -1,13 +1,14 @@
-from flask import Blueprint, render_template, request, g, session, redirect, url_for
+from flask import Blueprint, render_template, request, g, session, redirect
 from apis import activedirectory  # gsuite
 import user
+from blueprints.login import login_required
 
 bp = Blueprint('add', __name__, url_prefix='/add')
 
 @bp.route('/', methods=('POST', 'GET'))
+@login_required
 def addIndex():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
+
     if request.method == 'POST':
         newUser = user.User()
         newUser.firstName = request.form['firstName']

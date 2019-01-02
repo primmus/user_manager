@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, g
 import tools
 import apis
 import user
+from blueprints.login import login_required
 
 bp = Blueprint('disable', __name__, url_prefix='/disable')
 
@@ -9,6 +10,7 @@ userToDisable = user.User()
 
 
 @bp.route('/', methods=('POST', 'GET'))
+@login_required
 def disableIndex():
     g.isSearch = True
 
