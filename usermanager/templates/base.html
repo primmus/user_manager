@@ -12,6 +12,9 @@
         <a href="{{ url_for('search.searchIndex') }}">Search users</a> | 
         <a href="{{ url_for('add.addIndex') }}">Create new user</a> |
         <a href="{{ url_for('disable.disableIndex') }}">Disable user</a>
+        {% if session['user_id'] is not none %}
+         | Logout
+        {% endif %}
     </div>
     {% block content %}
     {% endblock %}    

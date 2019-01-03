@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for, current_app  # g
+from flask import Blueprint, render_template, request, session, redirect, url_for, current_app, g
 from werkzeug.security import check_password_hash, generate_password_hash, check_password_hash
 from apis import database
-import functools
+import functools, json
 
 bp = Blueprint('login', __name__, url_prefix='/login')
 
@@ -17,6 +17,8 @@ def loginIndex():
         if check_password_hash(admin[2], password):
                 session.clear()
                 session['user_id'] = admin[1]
+                g.admin = admin[1]
+
         else:
                 return 'Login error', 403
 
@@ -25,7 +27,8 @@ def loginIndex():
 @bp.route('/admin', methods=('POST', 'GET'))
 def adminIndex():
 
-    if not current_app.config['ENABLED_USER_SETUP']:
+    admin_page_enabled = json.loads(open('settings.json').read())['admin_page']
+    if not admin_page_enabled:
         return 'Admin page disabled', 202
 
     if request.method == 'POST':
@@ -41,10 +44,8 @@ def adminIndex():
 
 def login_required(view):
         @functools.wraps(view)
-        def wrapped_view(**kwargs):
-                print(session.get('user_id'))
-                if session.get('user_id') is None:
-                        print('Is None!')
+        def wrapped_view(**kwargs):                
+                if session.get('user_id') is None:                        
                         return redirect(url_for('login.loginIndex'))
 
                 return view(**kwargs)
