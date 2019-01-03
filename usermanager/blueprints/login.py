@@ -18,6 +18,7 @@ def loginIndex():
                 session.clear()
                 session['user_id'] = admin[1]
                 g.admin = admin[1]
+                return redirect(url_for('index'))
 
         else:
                 return 'Login error', 403
@@ -50,3 +51,18 @@ def login_required(view):
 
                 return view(**kwargs)
         return wrapped_view
+
+@bp.route('/logout')
+def logout():
+        session.clear()
+        return redirect(url_for('index'))
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.isLogged = False
+    else:
+        g.isLogged = True
+

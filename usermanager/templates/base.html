@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <title>{% block title %}{% endblock %} - User Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='style.css') }}" />    
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://static1.squarespace.com/static/5723279a9f72660cf97b5edb/t/5b6dbb4eb8a04585c4a9762b/favicon.ico">   
 </head>
 <body>
     <div class="header">
@@ -12,8 +13,8 @@
         <a href="{{ url_for('search.searchIndex') }}">Search users</a> | 
         <a href="{{ url_for('add.addIndex') }}">Create new user</a> |
         <a href="{{ url_for('disable.disableIndex') }}">Disable user</a>
-        {% if session['user_id'] is not none %}
-         | Logout
+        {% if g.isLogged %}
+         | <a href="{{ url_for('login.logout') }}">Logout</a>
         {% endif %}
     </div>
     {% block content %}
