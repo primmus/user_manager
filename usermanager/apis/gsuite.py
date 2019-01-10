@@ -6,11 +6,17 @@ import apis.database
 
 SCOPES = [
     'https://www.googleapis.com/auth/admin.directory.user',
-    'https://www.googleapis.com/auth/admin.datatransfer'
+    'https://www.googleapis.com/auth/admin.datatransfer',
+    'https://www.googleapis.com/auth/calendar'
     ]
 SERVICE_ACCOUNT_FILE = 'service.json'
 # TODO: Move the user account to the settings files
 SUBJECT = 'sergio.bestetti@distilled.ie'
+
+def getCalendarService():
+    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    delegated_credentials = credentials.with_subject(SUBJECT)
+    return googleapiclient.discovery.build('calendar', 'v3', credentials=delegated_credentials)
 
 
 def getEmailService():
@@ -35,10 +41,10 @@ def disableUser(userToDisable):
         body=myBody).execute()
 
 
-def searchUser(userToSearch):
+def searchUser(userToSearch):    
     try:
         service = getEmailService()
-        results = service.users().get(userKey=userToSearch.gMainEmail, projection='basic').execute()
+        results = service.users().get(userKey=userToSearch.gMainEmail, projection='basic').execute()        
         userToSearch.firstName = results['name']['givenName']
         userToSearch.lastName = results['name']['familyName']
         userToSearch.gMainEmail = results['primaryEmail']
@@ -54,6 +60,11 @@ def searchUser(userToSearch):
                 userToSearch.gEmailAliases.append(item)
 
         userToSearch.gExists = True
+        # Calendar test
+        service = getCalendarService()
+        calendar = service.calendars().get(calendarId=userToSearch.gMainEmail).execute()
+        print(calendar)
+        # End of Calendar test
 
     except:        
         return userToSearch
