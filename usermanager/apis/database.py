@@ -17,7 +17,9 @@ def deleteTask(taskId):
 def addTask(taskId, originUser, destinationUser):
         conn = sqlite3.connect('db.sqlite3')
         c = conn.cursor()
-        c.execute("INSERT INTO Tasks (origin_user, destination_user, time_stamp, transfer_id) VALUES (?, ?, DATETIME('now'), ?)", (originUser.login, destinationUser.login, taskId))
+        c.execute("INSERT INTO Tasks (origin_user, destination_user, ",
+                  "time_stamp, transfer_id) VALUES (?, ?, DATETIME('now'), ?)",
+                  (originUser.login, destinationUser.login, taskId))
         conn.commit()
         conn.close()
 
@@ -58,8 +60,10 @@ def addAdmin(username, password):
         conn.close()
         return 0
 
+
 def getAdmin(username):
         conn = sqlite3.connect('db.sqlite3')
         c = conn.cursor()
-        admin = c.execute('SELECT * FROM Users WHERE login = ?', (username,)).fetchone()
+        admin = c.execute('SELECT * FROM Users WHERE login = ?',
+                          (username,)).fetchone()
         return admin

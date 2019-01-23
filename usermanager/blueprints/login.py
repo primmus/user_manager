@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for, current_app, g
-from werkzeug.security import check_password_hash, generate_password_hash, check_password_hash
+from flask import (Blueprint, render_template, request,
+                   session, redirect, url_for, g)  # current_app)
+from werkzeug.security import check_password_hash, generate_password_hash
 from apis import database
-import functools, json
+import functools
+import json
 
 bp = Blueprint('login', __name__, url_prefix='/login')
 
@@ -43,19 +45,22 @@ def adminIndex():
 
     return render_template('admin.html')
 
+
 def login_required(view):
         @functools.wraps(view)
-        def wrapped_view(**kwargs):                
-                if session.get('user_id') is None:                        
+        def wrapped_view(**kwargs):
+                if session.get('user_id') is None:
                         return redirect(url_for('login.loginIndex'))
 
                 return view(**kwargs)
         return wrapped_view
 
+
 @bp.route('/logout')
 def logout():
         session.clear()
         return redirect(url_for('index'))
+
 
 @bp.before_app_request
 def load_logged_in_user():
@@ -65,4 +70,3 @@ def load_logged_in_user():
         g.isLogged = False
     else:
         g.isLogged = True
-

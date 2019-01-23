@@ -13,25 +13,32 @@ SERVICE_ACCOUNT_FILE = 'service.json'
 # TODO: Move the user account to the settings files
 SUBJECT = 'sergio.bestetti@distilled.ie'
 
+
 def getCalendarService():
-    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     delegated_credentials = credentials.with_subject(SUBJECT)
-    return googleapiclient.discovery.build('calendar', 'v3', credentials=delegated_credentials)
+    return googleapiclient.discovery.build('calendar', 'v3',
+                                           credentials=delegated_credentials)
 
 
 def getEmailService():
-    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     delegated_credentials = credentials.with_subject(SUBJECT)
-    return googleapiclient.discovery.build('admin', 'directory_v1', credentials=delegated_credentials)
+    return googleapiclient.discovery.build('admin', 'directory_v1',
+                                           credentials=delegated_credentials)
 
 
 def getDatatransferService():
-    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     delegated_credentials = credentials.with_subject(SUBJECT)
-    return googleapiclient.discovery.build('admin', 'datatransfer_v1', credentials=delegated_credentials)
+    return googleapiclient.discovery.build('admin', 'datatransfer_v1',
+                                           credentials=delegated_credentials)
 
 
-def disableUser(userToDisable):    
+def disableUser(userToDisable):
     service = getEmailService()
     myBody = {
         "suspended": True
@@ -41,16 +48,17 @@ def disableUser(userToDisable):
         body=myBody).execute()
 
 
-def searchUser(userToSearch):    
+def searchUser(userToSearch):
     try:
         service = getEmailService()
-        results = service.users().get(userKey=userToSearch.gMainEmail, projection='basic').execute()        
+        results = service.users().get(userKey=userToSearch.gMainEmail,
+                                      projection='basic').execute()
         userToSearch.firstName = results['name']['givenName']
         userToSearch.lastName = results['name']['familyName']
         userToSearch.gMainEmail = results['primaryEmail']
         userToSearch.gAdmin = results['isAdmin']
         userToSearch.gOu = results['orgUnitPath']
-        userToSearch.gId = results['id']        
+        userToSearch.gId = results['id']
 
         for item in results['emails']:
             userToSearch.gEmailAliases.append(item['address'])
@@ -62,7 +70,8 @@ def searchUser(userToSearch):
         userToSearch.gExists = True
         # Calendar test
         service = getCalendarService()
-        calendar = service.calendars().get(calendarId=userToSearch.gMainEmail).execute()
+        calendar = service.calendars().get(calendarId=userToSearch.gMainEmail)\
+            .execute()
         print(calendar)
         # End of Calendar test
 

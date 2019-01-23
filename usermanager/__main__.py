@@ -22,5 +22,5 @@ app.register_blueprint(login.bp)
 
 if __name__ == '__main__':
     monitorThread = threading.Thread(target=apis.database.startMonitor)
-    #monitorThread.start()
+    # monitorThread.start()
     app.run(host='0.0.0.0', port=5000, debug=True)

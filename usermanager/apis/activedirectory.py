@@ -27,7 +27,8 @@ def convertGuid(rdGuid):
 
 
 def searchUser(userToSearch):
-    adFilter = "(&(objectclass=user)(!(objectclass=computer))(sAMAccountName=" + userToSearch.login + "))"
+    adFilter = "(&(objectclass=user)(!(objectclass=computer))(sAMAccountName=",
+    + userToSearch.login + "))"
     with Connection(server,
                     user=ad_config['user'],
                     password=ad_config['password'],
@@ -37,15 +38,18 @@ def searchUser(userToSearch):
                     conn.search(
                             search_base=ad_config['users_ou'],
                             search_filter=adFilter,
-                            attributes=["distinguishedName", "memberOf", "userAccountControl", "badPwdCount"]
+                            attributes=["distinguishedName", "memberOf",
+                                        "userAccountControl", "badPwdCount"]
                     )
                     if len(conn.entries) < 1:
                         return userToSearch
 
                     userToSearch.adDn = str(conn.entries[0].distinguishedName)
                     groups = conn.entries[0].memberOf
-                    userToSearch.setAdAccountStatus(conn.entries[0].userAccountControl)                    
-                    userToSearch.adWrongPasswordAttempts = conn.entries[0].badPwdCount
+                    userToSearch.setAdAccountStatus(conn.entries[0]
+                                                    .userAccountControl)
+                    userToSearch.adWrongPasswordAttempts \
+                    = conn.entries[0].badPwdCount
 
                     for group in groups:
                             name = group.split(',')[0]

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, g, session, redirect
+from flask import Blueprint, render_template, request, g  # session, redirect
 from apis import activedirectory  # gsuite
 import user
 from blueprints.login import login_required
